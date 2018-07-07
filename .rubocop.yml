@@ -1,0 +1,34 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Metrics/LineLength:
+  Enabled: true
+  Exclude:
+    - test/dummy/config/environments/development.rb
+    - test/dummy/config/environments/production.rb
+    - test/dummy/config/environments/test.rb
+    - test/dummy/config/environments/production.rb
+    - test/dummy/config/initializers/backtrace_silencers.rb
+    - test/dummy/config/initializers/content_security_policy.rb
+    - test/dummy/config/initializers/wrap_parameters.rb
+    - test/dummy/config/application.rb
+    - test/dummy/config/puma.rb
+    - test/dummy/Rakefile
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  Exclude:
+    - bin/test
+    - test/dummy/bin/*
+
+Style/MethodDefParentheses:
+  Enabled: false
+
+Style/MixinUsage:
+  Enabled: true
+  Exclude:
+    - test/dummy/bin/setup
+    - test/dummy/bin/update
