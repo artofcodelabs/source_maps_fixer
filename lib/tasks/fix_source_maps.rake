@@ -13,27 +13,15 @@ namespace :assets do
 
   private
 
-  def assets_path
-    Rails.root.join 'app', 'assets', 'assets'
-  end
-
-  def asset_path file_name
-    File.join assets_path, file_name
-  end
-
-  def lang file_name
-    file_name.match?(/\.css/) ? :css : :js
-  end
-
   def files_with_source_maps
-    Dir.entries(assets_path)
+    Dir.glob("#{Rails.root.join 'app', 'assets'}/**/*")
        .find_all { |name| name =~ /\.map\Z/ }
        .map { |name| [name.sub('.map', ''), name] }
        .to_h
   end
 
   def source_mapping_url file_name
-    case lang(file_name)
+    case file_name.match?(/\.css/) ? :css : :js
     when :css
       "/*# sourceMappingURL=#{file_name}*/"
     when :js
@@ -46,11 +34,10 @@ namespace :assets do
   end
 
   def fix_source_mapping_url file_name, sm_name
-    content = File.read asset_path(file_name)
-    new_content = content.sub(
-      source_mapping_url(sm_name),
+    new_content = File.read(file_name).sub(
+      source_mapping_url(File.basename(sm_name)),
       source_mapping_url(digest_path(sm_name))
     )
-    File.open(asset_path(file_name), 'w') { |file| file.puts new_content }
+    File.open(file_name, 'w') { |file| file.puts new_content }
   end
 end
