@@ -24,11 +24,11 @@ class FixSourceMapsTest < ActiveSupport::TestCase
 
   private
 
-    def path_to file_name
-      File.join Rails.root, 'app', 'assets', 'output', file_name
-    end
+  def path_to file_name
+    File.join Rails.root, 'app', 'assets', 'output', file_name
+  end
 
-    def last_line file_path
-      File.readlines(file_path)[-1].strip
-    end
+  def last_line file_path
+    File.readlines(file_path)[-1].strip
+  end
 end

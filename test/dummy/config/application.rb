@@ -2,11 +2,11 @@
 
 require_relative 'boot'
 
-%w(
+%w[
   action_controller/railtie
   rails/test_unit/railtie
   sprockets/railtie
-).each do |railtie|
+].each do |railtie|
   require railtie
 end
 
