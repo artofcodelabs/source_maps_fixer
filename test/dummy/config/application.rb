@@ -4,7 +4,6 @@ require_relative 'boot'
 
 %w(
   action_controller/railtie
-  action_view/railtie
   rails/test_unit/railtie
   sprockets/railtie
 ).each do |railtie|
