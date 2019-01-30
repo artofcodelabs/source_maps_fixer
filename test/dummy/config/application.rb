@@ -2,7 +2,15 @@
 
 require_relative 'boot'
 
-require 'rails/all'
+%w(
+  action_controller/railtie
+  action_view/railtie
+  action_mailer/railtie
+  rails/test_unit/railtie
+  sprockets/railtie
+).each do |railtie|
+  require railtie
+end
 
 Bundler.require(*Rails.groups)
 require 'source_maps_fixer'
