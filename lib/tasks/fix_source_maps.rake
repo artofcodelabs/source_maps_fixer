@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :assets do
-  desc 'Fixess source maps'
+  desc 'Fixes source maps'
 
   task fix_source_maps: [:environment] do
     puts 'Fixing source maps...'
