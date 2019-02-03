@@ -10,7 +10,7 @@ class FixSourceMapsTest < ActiveSupport::TestCase
   end
 
   def teardown
-    SourceMapsFixer::Executor.revert
+    SourceMapsFixer::Executor.undo
   end
 
   test 'changes sourceMappingURL to the digest version' do

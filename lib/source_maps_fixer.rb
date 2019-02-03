@@ -36,7 +36,7 @@ module SourceMapsFixer
       end
     end
 
-    def self.revert
+    def self.undo
       Path.files_with_source_maps.each do |file_name, sm_name|
         new_content = File.read(file_name).sub(
           Path.source_mapping_url(Path.digest_path(sm_name)),

@@ -11,7 +11,7 @@ namespace :assets do
 
   task revert_fix_source_maps: [:environment] do
     puts 'Reverting source maps...'
-    SourceMapsFixer::Executor.revert
+    SourceMapsFixer::Executor.undo
     puts 'Source maps have been reverted!'
   end
 end
