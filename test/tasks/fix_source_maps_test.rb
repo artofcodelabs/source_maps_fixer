@@ -5,7 +5,6 @@ require 'rake'
 
 class FixSourceMapsTest < ActiveSupport::TestCase
   def setup
-    Rake::Task['assets:fix_source_maps'].reenable
     Rake::Task['assets:fix_source_maps'].invoke
   end
 
