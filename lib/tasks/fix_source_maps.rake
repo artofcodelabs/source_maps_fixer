@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 namespace :assets do
-  desc 'Fixes source maps'
-
+  desc 'Fix URLs to source maps'
   task fix_source_maps: [:environment] do
-    puts 'Fixing source maps...'
+    puts 'Fixing URLs to source maps...'
     SourceMapsFixer::Executor.call
-    puts 'Source maps have been fixed!'
+    puts 'URLs to source maps have been fixed!'
   end
 
-  task revert_fix_source_maps: [:environment] do
-    puts 'Reverting source maps...'
+  desc 'Revert fixed URLs to source maps'
+  task undo_fix_source_maps: [:environment] do
+    puts 'Reverting fixed URLs to source maps...'
     SourceMapsFixer::Executor.undo
-    puts 'Source maps have been reverted!'
+    puts 'URLs to source maps have been reverted!'
   end
 end
