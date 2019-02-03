@@ -15,6 +15,7 @@ Metrics/LineLength:
     - test/dummy/config/puma.rb
     - test/dummy/Rakefile
     - test/tasks/fix_source_maps_test.rb
+    - test/tasks/prepare_test.rb
 
 Style/Documentation:
   Enabled: false

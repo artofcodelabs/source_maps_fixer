@@ -8,4 +8,10 @@ namespace :assets do
     SourceMapsFixer::Executor.call
     puts 'Source maps have been fixed!'
   end
+
+  task revert_fix_source_maps: [:environment] do
+    puts 'Reverting source maps...'
+    SourceMapsFixer::Executor.revert
+    puts 'Source maps have been reverted!'
+  end
 end
