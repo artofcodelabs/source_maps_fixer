@@ -2,7 +2,7 @@
 
 namespace :assets do
   desc 'Fix URLs to source maps and compile assets'
-  task :prepare do
+  task prepare: [:environment] do
     SourceMapsFixer::Executor.call
     Rake::Task['assets:precompile'].invoke
     SourceMapsFixer::Executor.undo
