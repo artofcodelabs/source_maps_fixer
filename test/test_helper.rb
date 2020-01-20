@@ -5,7 +5,7 @@ ENV['RAILS_ENV'] = 'test'
 
 require_relative '../test/dummy/config/environment'
 require 'rails/test_help'
-Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].sort.each { |f| require f }
 
 # Filter out Minitest backtrace while allowing backtrace from other libraries
 # to be shown.
