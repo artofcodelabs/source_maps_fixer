@@ -18,9 +18,9 @@ module SourceMapsFixer
     def self.source_mapping_url file_name
       case file_name.match?(/\.css/) ? :css : :js
       when :css
-        "/*# sourceMappingURL=#{file_name}*/"
+        %(/*# sourceMappingURL=#{file_name}*/)
       when :js
-        "//# sourceMappingURL=#{file_name}"
+        %(//# sourceMappingURL=#{file_name})
       end
     end
   end
