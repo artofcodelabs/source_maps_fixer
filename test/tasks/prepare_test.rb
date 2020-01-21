@@ -16,11 +16,11 @@ class PrepareTest < ActiveSupport::TestCase
   end
 
   test 'existence of files' do
-    assert File.file?(path_to APP_JS_MAP_FILENAME)
-    assert File.file?(path_to APP_CSS_MAP_FILENAME)
+    assert File.file?(path_to(APP_JS_MAP_FILENAME))
+    assert File.file?(path_to(APP_CSS_MAP_FILENAME))
 
-    assert_equal APP_JS_MAP_FILENAME, extract_source_map_filename(last_line(app_path 'js'))
-    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path 'css'))
+    assert_equal APP_JS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('js')))
+    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('css')))
 
     assert File.file?(app_path('js.gz'))
     assert File.file?(app_path('css.gz'))
@@ -28,7 +28,7 @@ class PrepareTest < ActiveSupport::TestCase
 
   private
 
-  def path_to file_name
+  def path_to(file_name)
     File.join assets_path, file_name
   end
 
@@ -36,7 +36,7 @@ class PrepareTest < ActiveSupport::TestCase
     File.join Rails.root, 'public', 'assets'
   end
 
-  def last_line file_path
+  def last_line(file_path)
     File.readlines(file_path)[-1]
   end
 
@@ -44,15 +44,15 @@ class PrepareTest < ActiveSupport::TestCase
     `ls #{assets_path}`.split("\n")
   end
 
-  def app_filename ext
+  def app_filename(ext)
     assets.find { |name| name =~ /application\-[0-9a-f]+\.#{ext}/ }
   end
 
-  def app_path ext
+  def app_path(ext)
     File.join assets_path, app_filename(ext)
   end
 
-  def extract_source_map_filename line
+  def extract_source_map_filename(line)
     line.split('sourceMappingURL=').last.chomp.sub(';', '').sub('*/', '')
   end
 end

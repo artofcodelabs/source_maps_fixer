@@ -11,11 +11,11 @@ module SourceMapsFixer
          .to_h
     end
 
-    def self.digest_path file_name
+    def self.digest_path(file_name)
       Rails.application.assets.find_asset(file_name).digest_path
     end
 
-    def self.source_mapping_url file_name
+    def self.source_mapping_url(file_name)
       case file_name.match?(/\.css/) ? :css : :js
       when :css
         %(/*# sourceMappingURL=#{file_name}*/)

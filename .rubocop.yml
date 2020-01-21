@@ -20,15 +20,6 @@ Layout/LineLength:
 Style/Documentation:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
-  Enabled: true
-  Exclude:
-    - bin/test
-    - test/dummy/bin/*
-
-Style/MethodDefParentheses:
-  Enabled: false
-
 Style/MixinUsage:
   Enabled: true
   Exclude:

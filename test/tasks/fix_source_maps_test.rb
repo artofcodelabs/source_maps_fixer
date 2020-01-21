@@ -17,13 +17,13 @@ class FixSourceMapsTest < ActiveSupport::TestCase
     assert_equal '//# sourceMappingURL=application.js-0c3ca5eaf24d04fc657ba1de3511dec1c1bb214ee56ce9074c19a273160869a1.map', last_line(path_to_js_bundle('application.js'))
   end
 
-  def last_line file_path
+  def last_line(file_path)
     File.readlines(file_path)[-1].strip
   end
 
   private
 
-  def path_to_js_bundle file_name
+  def path_to_js_bundle(file_name)
     File.join Rails.root, 'app', 'assets', 'output', file_name
   end
 end
