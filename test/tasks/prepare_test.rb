@@ -19,8 +19,8 @@ class PrepareTest < ActiveSupport::TestCase
     assert File.file?(path_to(APP_JS_MAP_FILENAME))
     assert File.file?(path_to(APP_CSS_MAP_FILENAME))
 
-    assert_equal APP_JS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('js')))
-    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('css')))
+    assert_equal APP_JS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('js'), -2))
+    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('css'), -2))
 
     assert File.file?(app_path('js.gz'))
     assert File.file?(app_path('css.gz'))
@@ -36,8 +36,8 @@ class PrepareTest < ActiveSupport::TestCase
     File.join Rails.root, 'public', 'assets'
   end
 
-  def last_line(file_path)
-    File.readlines(file_path)[-1]
+  def last_line(file_path, offset = -1)
+    File.readlines(file_path)[offset]
   end
 
   def assets
@@ -53,6 +53,6 @@ class PrepareTest < ActiveSupport::TestCase
   end
 
   def extract_source_map_filename(line)
-    line.split('sourceMappingURL=').last.chomp.sub(';', '').sub('*/', '')
+    line.split('sourceMappingURL=').last.chomp.sub('*/', '')
   end
 end

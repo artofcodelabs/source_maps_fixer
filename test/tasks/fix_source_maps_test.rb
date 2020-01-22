@@ -13,12 +13,12 @@ class FixSourceMapsTest < ActiveSupport::TestCase
   end
 
   test 'changes sourceMappingURL to the digest version' do
-    assert_equal '/*# sourceMappingURL=application.css-955bd5a4593a7de76455672f49e450d0b278304b00ad4008028ebceedd47311a.map*/', last_line(path_to_js_bundle('application.css'))
-    assert_equal '//# sourceMappingURL=application.js-0c3ca5eaf24d04fc657ba1de3511dec1c1bb214ee56ce9074c19a273160869a1.map', last_line(path_to_js_bundle('application.js'))
+    assert_equal '/*# sourceMappingURL=application.css-955bd5a4593a7de76455672f49e450d0b278304b00ad4008028ebceedd47311a.map*/', last_line(path_to_js_bundle('application.css'), -2)
+    assert_equal '//# sourceMappingURL=application.js-0c3ca5eaf24d04fc657ba1de3511dec1c1bb214ee56ce9074c19a273160869a1.map', last_line(path_to_js_bundle('application.js'), -2)
   end
 
-  def last_line(file_path)
-    File.readlines(file_path)[-1].strip
+  def last_line(file_path, offset = -1)
+    File.readlines(file_path)[offset].strip
   end
 
   private
