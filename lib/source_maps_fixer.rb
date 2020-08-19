@@ -30,7 +30,7 @@ module SourceMapsFixer
       Path.files_with_source_maps.each do |file_name, sm_name|
         new_content = File.read(file_name).sub(
           Path.source_mapping_url(File.basename(sm_name)),
-          Path.source_mapping_url(Path.digest_path(sm_name))+"\n\n"
+          Path.source_mapping_url(Path.digest_path(sm_name)) + "\n\n"
         )
         File.open(file_name, 'w') { |file| file.write new_content }
       end
@@ -39,7 +39,7 @@ module SourceMapsFixer
     def self.undo
       Path.files_with_source_maps.each do |file_name, sm_name|
         new_content = File.read(file_name).sub(
-          Path.source_mapping_url(Path.digest_path(sm_name))+"\n\n",
+          Path.source_mapping_url(Path.digest_path(sm_name)) + "\n\n",
           Path.source_mapping_url(File.basename(sm_name))
         )
         File.open(file_name, 'w') { |file| file.write new_content }
