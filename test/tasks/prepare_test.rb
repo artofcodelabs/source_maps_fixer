@@ -19,8 +19,8 @@ class PrepareTest < ActiveSupport::TestCase
     assert File.file?(path_to(APP_JS_MAP_FILENAME))
     assert File.file?(path_to(APP_CSS_MAP_FILENAME))
 
-    assert_equal APP_JS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('js'), -2))
-    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('css'), -2))
+    assert_equal "/assets/#{APP_JS_MAP_FILENAME}", extract_source_map_filename(last_line(app_path('js'), -1))
+    assert_equal APP_CSS_MAP_FILENAME, extract_source_map_filename(last_line(app_path('css'), -1))
 
     assert File.file?(app_path('js.gz'))
     assert File.file?(app_path('css.gz'))
@@ -45,7 +45,7 @@ class PrepareTest < ActiveSupport::TestCase
   end
 
   def app_filename(ext)
-    assets.find { |name| name =~ /application\-[0-9a-f]+\.#{ext}/ }
+    assets.find { |name| name =~ /application-[0-9a-f]+\.#{ext}/ }
   end
 
   def app_path(ext)

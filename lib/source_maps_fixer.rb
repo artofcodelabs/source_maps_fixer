@@ -3,46 +3,61 @@
 require 'source_maps_fixer/railtie'
 
 module SourceMapsFixer
-  class Path
-    def self.files_with_source_maps
+  module Path
+    module_function
+
+    def files_with_source_maps(filter = 'css')
       Dir.glob("#{Rails.root.join 'app', 'assets'}/**/*")
-         .find_all { |name| name =~ /\.map\Z/ }
-         .map { |name| [name.sub('.map', ''), name] }
-         .to_h
+         .grep(/#{filter}\.map\Z/)
+         .to_h { |name| [name.sub('.map', ''), name] }
     end
 
-    def self.digest_path(file_name)
+    def digest_path(file_name)
       Rails.application.assets.find_asset(file_name).digest_path
     end
 
-    def self.source_mapping_url(file_name)
-      case file_name.match?(/\.css/) ? :css : :js
-      when :css
-        %(/*# sourceMappingURL=#{file_name}*/)
-      when :js
-        %(//# sourceMappingURL=#{file_name})
+    def source_mapping_url(file_name)
+      %(/*# sourceMappingURL=#{file_name}*/) if file_name.match?(/\.css/)
+    end
+  end
+
+  module ReplaceLinksWithPredicted
+    module_function
+
+    def call
+      Path.files_with_source_maps.each do |asset_path, sm_path|
+        new_content = File.read(asset_path).sub(
+          Path.source_mapping_url(File.basename(sm_path)),
+          Path.source_mapping_url(Path.digest_path(sm_path))
+        )
+        File.write(asset_path, new_content)
+      end
+    end
+
+    def undo
+      Path.files_with_source_maps.each do |asset_path, sm_path|
+        new_content = File.read(asset_path).sub(
+          Path.source_mapping_url(Path.digest_path(sm_path)),
+          Path.source_mapping_url(File.basename(sm_path))
+        )
+        File.write(asset_path, new_content)
       end
     end
   end
 
-  class Executor
-    def self.call
-      Path.files_with_source_maps.each do |file_name, sm_name|
-        new_content = File.read(file_name).sub(
-          Path.source_mapping_url(File.basename(sm_name)),
-          Path.source_mapping_url(Path.digest_path(sm_name)) + "\n\n"
-        )
-        File.open(file_name, 'w') { |file| file.write new_content }
-      end
-    end
+  module FixCompiled
+    module_function
 
-    def self.undo
-      Path.files_with_source_maps.each do |file_name, sm_name|
-        new_content = File.read(file_name).sub(
-          Path.source_mapping_url(Path.digest_path(sm_name)) + "\n\n",
-          Path.source_mapping_url(File.basename(sm_name))
-        )
-        File.open(file_name, 'w') { |file| file.write new_content }
+    def call
+      Path.files_with_source_maps('js').each do |asset_path, _sm_path|
+        public_path = Dir.glob("#{Rails.root.join 'public', 'assets'}/**/*")
+                         .find do |path|
+                           File.basename(path) == Path.digest_path(asset_path)
+                         end
+        lines = File.readlines(public_path)
+        next unless lines[-2] == "//!\n" && lines[-1] == ";\n"
+
+        File.write(public_path, lines[0..-3].join)
       end
     end
   end
