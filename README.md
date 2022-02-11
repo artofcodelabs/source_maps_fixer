@@ -48,12 +48,12 @@ $ gem install source_maps_fixer
 ```
 
 
-# 📈 Changelog
+## 📈 Changelog
 
-## Major releases 🎙
+### Major releases 🎙
 
-### 0.2 _(2022-02-11)_
-#### 💥 breaking changes
+#### 0.2 _(2022-02-11)_
+##### 💥 breaking changes
 
 * *source\_maps\_fixer* works with Rails 7 and Ruby 3.1.
 * it drops support for Ruby 2.6
