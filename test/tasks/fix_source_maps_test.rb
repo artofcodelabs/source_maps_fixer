@@ -9,7 +9,7 @@ class FixSourceMapsTest < ActiveSupport::TestCase
   end
 
   def teardown
-    SourceMapsFixer::Executor.undo
+    SourceMapsFixer::ReplaceLinksWithPredicted.undo
   end
 
   test 'changes sourceMappingURL to the digest version' do
@@ -24,6 +24,6 @@ class FixSourceMapsTest < ActiveSupport::TestCase
   private
 
   def path_to_js_bundle(file_name)
-    File.join Rails.root, 'app', 'assets', 'output', file_name
+    File.join(Rails.root, 'app', 'assets', 'output', file_name)
   end
 end

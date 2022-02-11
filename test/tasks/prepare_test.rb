@@ -45,7 +45,7 @@ class PrepareTest < ActiveSupport::TestCase
   end
 
   def app_filename(ext)
-    assets.find { |name| name =~ /application\-[0-9a-f]+\.#{ext}/ }
+    assets.find { |name| name =~ /application-[0-9a-f]+\.#{ext}/ }
   end
 
   def app_path(ext)
