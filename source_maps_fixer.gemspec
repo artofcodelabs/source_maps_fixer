@@ -29,8 +29,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.7.0'
 
   s.add_dependency 'rails', '>= 5.0', '< 8.0'
+  s.add_dependency 'sprockets-rails', '~> 3.3.0'
 
   s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'sprockets-rails', '3.2.2'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
