@@ -6,7 +6,6 @@ namespace :assets do
     SourceMapsFixer::ReplaceLinksWithPredicted.call
     Rake::Task['assets:precompile'].invoke
     SourceMapsFixer::ReplaceLinksWithPredicted.undo
-    SourceMapsFixer::FixCompiled.call
     puts 'Assets have been prepared!'
   end
 end

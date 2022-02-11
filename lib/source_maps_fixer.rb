@@ -6,7 +6,7 @@ module SourceMapsFixer
   module Path
     module_function
 
-    def files_with_source_maps(filter = 'css')
+    def files_with_source_maps(filter = '')
       Dir.glob("#{Rails.root.join 'app', 'assets'}/**/*")
          .grep(/#{filter}\.map\Z/)
          .to_h { |name| [name.sub('.map', ''), name] }
@@ -16,8 +16,13 @@ module SourceMapsFixer
       Rails.application.assets.find_asset(file_name).digest_path
     end
 
-    def source_mapping_url(file_name)
-      %(/*# sourceMappingURL=#{file_name}*/) if file_name.match?(/\.css/)
+    def self.source_mapping_url(file_name)
+      case file_name.match?(/\.css/) ? :css : :js
+      when :css
+        %(/*# sourceMappingURL=#{file_name}*/)
+      when :js
+        %(//# sourceMappingURL=#{file_name})
+      end
     end
   end
 
@@ -28,7 +33,7 @@ module SourceMapsFixer
       Path.files_with_source_maps.each do |asset_path, sm_path|
         new_content = File.read(asset_path).sub(
           Path.source_mapping_url(File.basename(sm_path)),
-          Path.source_mapping_url(Path.digest_path(sm_path))
+          Path.source_mapping_url(Path.digest_path(sm_path)) + "\n\n"
         )
         File.write(asset_path, new_content)
       end
@@ -37,7 +42,7 @@ module SourceMapsFixer
     def undo
       Path.files_with_source_maps.each do |asset_path, sm_path|
         new_content = File.read(asset_path).sub(
-          Path.source_mapping_url(Path.digest_path(sm_path)),
+          Path.source_mapping_url(Path.digest_path(sm_path)) + "\n\n",
           Path.source_mapping_url(File.basename(sm_path))
         )
         File.write(asset_path, new_content)
