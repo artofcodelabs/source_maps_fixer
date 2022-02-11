@@ -30,5 +30,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '>= 5.0', '< 7.0'
 
+  s.add_development_dependency 'listen'
   s.add_development_dependency 'rubocop'
 end
