@@ -48,6 +48,18 @@ $ gem install source_maps_fixer
 ```
 
 
+# 📈 Changelog
+
+## Major releases 🎙
+
+### 0.2 _(2022-02-11)_
+#### 💥 breaking changes
+
+* *source\_maps\_fixer* works with Rails 7 and Ruby 3.1.
+* it drops support for Ruby 2.6
+* it supports sprockets-rails ~> 3.3.0. Version 3.4.0 works differently. `bin/rails assets:precompile` correctly replaces *sourceMappingURL*s for JS files but adds unnecessary comments
+
+
 ## 📜 License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
